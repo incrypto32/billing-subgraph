@@ -1,0 +1,9 @@
+{
+    "network": "matic",
+    "blockNumber": 17803962,
+    "addressBilling": "0x10829DB618E6F520Fa3A01c75bC6dDf8722fA9fE",
+    "addressGRT": "0x5fe2B58c013d7601147DcdD68C143A77499f5531",
+    "blockNumberOld": 16375500,
+    "addressBillingOld": "0xa382f75b375d6a07bfd1af99d4383c6e1d1c4004",
+    "useOld": true
+}

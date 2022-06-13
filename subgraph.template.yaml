@@ -1,0 +1,76 @@
+specVersion: 0.0.2
+description: The Gateway Billing Subgraph
+repository: https://github.com/edgeandnode/billing-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Billing
+    network: {{network}}
+    source:
+      address: "{{addressBilling}}"
+      abi: Billing
+      startBlock: {{blockNumber}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/billing.ts
+      entities:
+        - Billing
+        - User
+        - TokensAdded
+        - TokensRemoved
+        - TokensPulled
+      abis:
+        - name: Billing
+          file: ./abis/Billing.json
+        - name: SushiPair
+          file: ./abis/SushiPair.json
+      eventHandlers:
+        - event: GatewayUpdated(indexed address)
+          handler: handleGatewayUpdated
+        - event: NewOwnership(indexed address,indexed address)
+          handler: handleNewOwnership
+        - event: TokensAdded(indexed address,uint256)
+          handler: handleTokensAdded
+        - event: TokensRemoved(indexed address,indexed address,uint256)
+          handler: handleTokensRemoved
+        - event: TokensPulled(indexed address,uint256)
+          handler: handleTokensPulled
+{{#useOld}}
+  - kind: ethereum/contract
+    name: BillingOld
+    network: {{network}}
+    source:
+      address: "{{addressBillingOld}}"
+      abi: Billing
+      startBlock: {{blockNumberOld}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/billing.ts
+      entities:
+        - Billing
+        - User
+        - TokensAdded
+        - TokensRemoved
+        - TokensPulled
+      abis:
+        - name: Billing
+          file: ./abis/Billing.json
+        - name: SushiPair
+          file: ./abis/SushiPair.json
+      eventHandlers:
+        - event: GatewayUpdated(indexed address)
+          handler: handleGatewayUpdated
+        - event: NewOwnership(indexed address,indexed address)
+          handler: handleNewOwnership
+        - event: TokensAdded(indexed address,uint256)
+          handler: handleTokensAdded
+        - event: TokensRemoved(indexed address,indexed address,uint256)
+          handler: handleTokensRemoved
+        - event: TokensPulled(indexed address,uint256)
+          handler: handleTokensPulled
+{{/useOld}}
